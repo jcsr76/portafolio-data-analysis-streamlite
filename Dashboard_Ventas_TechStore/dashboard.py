@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 import streamlit as st
 import plotly.express as px
+import os
 
 # 1. CONFIGURACIÓN DE PÁGINA
 st.set_page_config(layout="wide", page_title="Dashboard de Ventas TechStore")
@@ -10,7 +11,14 @@ st.set_page_config(layout="wide", page_title="Dashboard de Ventas TechStore")
 # --- 1. CARGA Y LIMPIEZA INICIAL ---
 @st.cache_data
 def cargar_datos():
-    df = pd.read_csv('Dashboard_Ventas_TechStore/OnlineRetail.csv', encoding='ISO-8859-1')
+    # 1. Obtenemos la ruta absoluta de la carpeta donde vive este script (dashboard.py)
+    ruta_actual = os.path.dirname(__file__)
+
+    # 2. Construimos la ruta al CSV uniendo la carpeta actual con el nombre del archivo
+    ruta_csv = os.path.join(ruta_actual, 'OnlineRetail.csv')
+
+    # 3. Cargamos el archivo usando esa ruta dinámica
+    df = pd.read_csv(ruta_csv, encoding='ISO-8859-1')
     df = df[df['Quantity'] > 0]
     df['InvoiceDate'] = pd.to_datetime(df['InvoiceDate'])
     df['Total'] = df['Quantity'] * df['UnitPrice']
