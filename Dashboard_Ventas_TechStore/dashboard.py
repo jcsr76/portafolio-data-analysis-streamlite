@@ -10,7 +10,7 @@ st.set_page_config(layout="wide", page_title="Dashboard de Ventas TechStore")
 # --- 1. CARGA Y LIMPIEZA INICIAL ---
 @st.cache_data
 def cargar_datos():
-    df = pd.read_csv('OnlineRetail.csv', encoding='ISO-8859-1')
+    df = pd.read_csv('Dashboard_Ventas_TechStore/OnlineRetail.csv', encoding='ISO-8859-1')
     df = df[df['Quantity'] > 0]
     df['InvoiceDate'] = pd.to_datetime(df['InvoiceDate'])
     df['Total'] = df['Quantity'] * df['UnitPrice']
